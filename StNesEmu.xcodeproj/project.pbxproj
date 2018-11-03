@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CFC17218D332600863EBA /* CPU_BUS.swift */; };
+		D87CFC1B218D561A00863EBA /* Nes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CFC1A218D561A00863EBA /* Nes.swift */; };
 		D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CA218959D100DE637C /* AppDelegate.swift */; };
 		D8C734CD218959D100DE637C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CC218959D100DE637C /* ViewController.swift */; };
 		D8C734CF218959D500DE637C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8C734CE218959D500DE637C /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		D87CFC17218D332600863EBA /* CPU_BUS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPU_BUS.swift; sourceTree = "<group>"; };
+		D87CFC1A218D561A00863EBA /* Nes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nes.swift; sourceTree = "<group>"; };
 		D8C734C7218959D100DE637C /* StNesEmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StNesEmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C734CA218959D100DE637C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C734CC218959D100DE637C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 				D87CFC17218D332600863EBA /* CPU_BUS.swift */,
 			);
 			path = Bus;
+			sourceTree = "<group>";
+		};
+		D87CFC19218D560700863EBA /* Nes */ = {
+			isa = PBXGroup;
+			children = (
+				D87CFC1A218D561A00863EBA /* Nes.swift */,
+			);
+			path = Nes;
 			sourceTree = "<group>";
 		};
 		D8C734BE218959D100DE637C = {
@@ -161,6 +171,7 @@
 		D8C734F62189727800DE637C /* Nes */ = {
 			isa = PBXGroup;
 			children = (
+				D87CFC19218D560700863EBA /* Nes */,
 				D87CFC16218D32FA00863EBA /* Bus */,
 				D8C734F72189728700DE637C /* Cartridge */,
 			);
@@ -335,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C7350F218A2AC600DE637C /* UInt16+Page.swift in Sources */,
+				D87CFC1B218D561A00863EBA /* Nes.swift in Sources */,
 				D8C734FE218972EA00DE637C /* RAM.swift in Sources */,
 				D8C734CD218959D100DE637C /* ViewController.swift in Sources */,
 				D8C73500218972F200DE637C /* ROM.swift in Sources */,
