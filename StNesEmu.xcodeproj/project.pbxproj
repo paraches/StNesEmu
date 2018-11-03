@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D804697C218D6DEC00D193D7 /* Interrupts.swift in Sources */ = {isa = PBXBuildFile; fileRef = D804697B218D6DEC00D193D7 /* Interrupts.swift */; };
 		D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CFC17218D332600863EBA /* CPU_BUS.swift */; };
 		D87CFC1B218D561A00863EBA /* Nes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CFC1A218D561A00863EBA /* Nes.swift */; };
 		D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CA218959D100DE637C /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D804697B218D6DEC00D193D7 /* Interrupts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interrupts.swift; sourceTree = "<group>"; };
 		D87CFC17218D332600863EBA /* CPU_BUS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPU_BUS.swift; sourceTree = "<group>"; };
 		D87CFC1A218D561A00863EBA /* Nes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nes.swift; sourceTree = "<group>"; };
 		D8C734C7218959D100DE637C /* StNesEmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StNesEmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +98,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D804697A218D6DA400D193D7 /* CPU */ = {
+			isa = PBXGroup;
+			children = (
+				D804697B218D6DEC00D193D7 /* Interrupts.swift */,
+			);
+			path = CPU;
+			sourceTree = "<group>";
+		};
 		D87CFC16218D32FA00863EBA /* Bus */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +181,7 @@
 		D8C734F62189727800DE637C /* Nes */ = {
 			isa = PBXGroup;
 			children = (
+				D804697A218D6DA400D193D7 /* CPU */,
 				D87CFC19218D560700863EBA /* Nes */,
 				D87CFC16218D32FA00863EBA /* Bus */,
 				D8C734F72189728700DE637C /* Cartridge */,
@@ -354,6 +365,7 @@
 				D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */,
 				D8C735052189732F00DE637C /* IO.swift in Sources */,
 				D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */,
+				D804697C218D6DEC00D193D7 /* Interrupts.swift in Sources */,
 				D8C734F9218972A500DE637C /* Parser.swift in Sources */,
 				D8C734FB218972AF00DE637C /* Cartridge.swift in Sources */,
 				D8C735032189731600DE637C /* Types.swift in Sources */,

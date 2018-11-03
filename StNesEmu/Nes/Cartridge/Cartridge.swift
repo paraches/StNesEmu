@@ -9,10 +9,10 @@
 import Foundation
 
 struct Cartridge {
-    var isHorizontalMirror: Bool
-    var characterROM: ROM
-    var programROM: ROM
-    var mapper: UInt8
+    let isHorizontalMirror: Bool
+    let characterROM: ROM
+    let programROM: ROM
+    let mapper: UInt8
 }
 
 extension Cartridge: CustomStringConvertible {
