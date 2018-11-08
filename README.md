@@ -7,8 +7,8 @@ The code is port from [flownes](https://github.com/bokuweb/flownes) which is wri
 ## Schedule
 - [x] Parser/Cartridge
 - [x] ROM/RAM
-- [ ] Nes
-- [ ] BUS/Interrupt
+- [x] Nes
+- [x] BUS/Interrupt
 - [ ] CPU-1
 - [ ] CPU-2
 - [ ] DMA/PPU-1
