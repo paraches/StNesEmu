@@ -12,10 +12,13 @@ class ViewController: NSViewController {
     @IBOutlet weak var screenView: NSImageView!
     @IBOutlet weak var loadButton: NSButton!
     
+    var nes: Nes?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        nes = Nes()
     }
 
     override var representedObject: Any? {
@@ -31,8 +34,9 @@ class ViewController: NSViewController {
     
     func loadCartridge() {
         if let fileData = OpenDialog.openCartridge() {
-            if let cartridge = Parser.parse(fileData) {
+            if let cartridge = Parser.parse(fileData), let nes = nes {
                 print("Cartridge: \(cartridge)")
+                nes.loadCartridge(cartridge)
             }
             else {
                 print("Failt to open file")

@@ -13,7 +13,8 @@ class Nes: NSObject {
     
     private var loaded = false
 
-    func loadCartridge(cartridge: Cartridge) -> Bool {
+    @discardableResult
+    func loadCartridge(_ cartridge: Cartridge) -> Bool {
         //
         // Create 16K RAM and copy character data from Cartridge
         //
@@ -22,6 +23,12 @@ class Nes: NSObject {
             let data: Byte = cartridge.characterROM.read(i)
             characterMem.write(i, data)
         }
+        
+        //
+        //  PPU_BUS, Interrupts
+        //
+        let ppuBus = PPU_BUS(characterRAM: characterMem)
+        let interrupts = Interrupts()
 
         //
         //  Working RAM 2K

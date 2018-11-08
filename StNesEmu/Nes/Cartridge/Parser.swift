@@ -28,7 +28,7 @@ class Parser {
         let isHorizontalMirror = data[0x0006][0]    // Bit 0
 
         let mapper: UInt8 = ((data[0x0006] & 0xF0) >> 4) | (data[0x0007] & 0xF0)
-        guard mapper == 0 || mapper == 1 else { return nil }
+        guard mapper == 0 || mapper == 2 else { return nil }
 
         let characterRomStart = NES_HEADER_SIZE + programRomPages * PROGRAM_ROM_SIZE
         let characterRomEnd = characterRomStart + characterRomPages * CHARACTER_ROM_SIZE
