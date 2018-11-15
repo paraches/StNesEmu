@@ -22,7 +22,7 @@ class CPU_BUS: NSObject, Read, Write {
             return ram.read(address)
         }
         else if address < 0x2000 {      // Read Work RAM Mirror
-            return ram.read(address & 0x0800)
+            return ram.read(address % 0x0800)
         }
         else if address >= 0xC000 {
             if programROM.size() <= 0x4000 {            // Cartridge size 16K
@@ -67,6 +67,16 @@ class CPU_BUS: NSObject, Read, Write {
         else if address < 0x2000 {
             ram.write(address % 0x0800, data)
         }
+        else {
+            if let ram = programROM as? RAM {
+                if ram.size() > 0x4000 {
+                    ram.write(address - 0x8000, data)
+                }
+                else {
+                    ram.write(address - 0x4000, data)
+                }
+            }
+        }
     }
 
     func write(_ address: Address, _ data: Word) {
@@ -75,6 +85,16 @@ class CPU_BUS: NSObject, Read, Write {
         }
         else if address < 0x2000 {
             ram.write(address % 0x0800, data)
+        }
+        else {
+            if let ram = programROM as? RAM {
+                if ram.size() > 0x4000 {
+                    ram.write(address - 0x8000, data)
+                }
+                else {
+                    ram.write(address - 0x4000, data)
+                }
+            }
         }
     }
 }

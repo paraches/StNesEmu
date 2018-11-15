@@ -9,7 +9,7 @@ The code is port from [flownes](https://github.com/bokuweb/flownes) which is wri
 - [x] ROM/RAM
 - [x] Nes
 - [x] BUS/Interrupt
-- [ ] CPU-1
+- [x] CPU-1
 - [ ] CPU-2
 - [ ] DMA/PPU-1
 - [ ] PPU-2
