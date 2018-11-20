@@ -11,6 +11,7 @@ import Cocoa
 class ViewController: NSViewController {
     @IBOutlet weak var screenView: NSImageView!
     @IBOutlet weak var loadButton: NSButton!
+    @IBOutlet weak var stepButton: NSButton!
     
     var nes: Nes?
     
@@ -31,12 +32,17 @@ class ViewController: NSViewController {
         loadCartridge()
     }
     
+    @IBAction func clickStepButton(_ sender: Any) {
+        nes?.cpu?.run(true)
+    }
     
     func loadCartridge() {
         if let fileData = OpenDialog.openCartridge() {
             if let cartridge = Parser.parse(fileData), let nes = nes {
                 print("Cartridge: \(cartridge)")
-                nes.loadCartridge(cartridge)
+                if nes.loadCartridge(cartridge) {
+                    stepButton?.isEnabled = true
+                }
             }
             else {
                 print("Failt to open file")

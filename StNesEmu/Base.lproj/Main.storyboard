@@ -725,11 +725,23 @@
                                     <action selector="clickLoadButton:" target="XfG-lQ-9wD" id="Enp-Ze-RYX"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e8U-sp-77z">
+                                <rect key="frame" x="396" y="46" width="70" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Step" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aYU-09-IPY">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="clickStepButton:" target="XfG-lQ-9wD" id="UVc-Py-uHg"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="loadButton" destination="XCv-Dh-Scq" id="MPD-jV-pCE"/>
                         <outlet property="screenView" destination="w6d-Ki-6m4" id="MWY-2H-uFt"/>
+                        <outlet property="stepButton" destination="e8U-sp-77z" id="T5W-35-58P"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

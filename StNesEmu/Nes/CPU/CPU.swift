@@ -168,7 +168,8 @@ class CPU: NSObject, Read, Write {
     //
     //  Step
     //
-    func run() -> Int {
+    @discardableResult
+    func run(_ debug: Bool=false) -> Int {
         if interrupts.isNMIAssert() {
             processNMI()
         }
@@ -177,14 +178,17 @@ class CPU: NSObject, Read, Write {
             processIRQ()
         }
         
+        let pc = PC
         let code: Byte = fetch(PC)
         if let opcode = OpCode.opcodeTable[code] {
             if let modeName = opcode["mode"] as? String,
                 let mode = AddressingMode(rawValue: modeName),
                 let baseName = opcode["baseName"] as? String,
                 let cycle = opcode["cycle"] as? Int {
-
                 let (addrOrData, additionalCycle) = getAddrOrDataWithAdditionalCycle(mode)
+                if debug {
+                    showStep(opcode: code, mode: mode, pc: pc)
+                }
                 execInstruction(baseName, addrOrData, mode)
                 return cycle + additionalCycle + (hasBranched ? 1 : 0)
             }

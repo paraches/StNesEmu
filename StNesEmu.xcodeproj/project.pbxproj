@@ -30,6 +30,9 @@
 		D8C735082189775500DE637C /* UInt8+Bit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C735072189775500DE637C /* UInt8+Bit.swift */; };
 		D8C7350A2189EC9800DE637C /* OpenDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C735092189EC9800DE637C /* OpenDialog.swift */; };
 		D8C7350F218A2AC600DE637C /* UInt16+Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C7350E218A2AC600DE637C /* UInt16+Page.swift */; };
+		D8F2E31321A2D96B00BCC23A /* CPU+Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31221A2D96B00BCC23A /* CPU+Debugger.swift */; };
+		D8F2E31521A2DC8500BCC23A /* UnsignedInteger+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31421A2DC8500BCC23A /* UnsignedInteger+HexString.swift */; };
+		D8F2E31721A2DE0F00BCC23A /* DisAsm.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31621A2DE0F00BCC23A /* DisAsm.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +84,9 @@
 		D8C735092189EC9800DE637C /* OpenDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDialog.swift; sourceTree = "<group>"; };
 		D8C7350B2189F6D700DE637C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D8C7350E218A2AC600DE637C /* UInt16+Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt16+Page.swift"; sourceTree = "<group>"; };
+		D8F2E31221A2D96B00BCC23A /* CPU+Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CPU+Debugger.swift"; sourceTree = "<group>"; };
+		D8F2E31421A2DC8500BCC23A /* UnsignedInteger+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+HexString.swift"; sourceTree = "<group>"; };
+		D8F2E31621A2DE0F00BCC23A /* DisAsm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisAsm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +122,7 @@
 				D87FC251219538FB005C9C20 /* OpCode.swift */,
 				D87FC25321953F3D005C9C20 /* CPU+AddressingMode.swift */,
 				D87FC2552195D20F005C9C20 /* CPU+Instruction.swift */,
+				D8F2E31221A2D96B00BCC23A /* CPU+Debugger.swift */,
 			);
 			path = CPU;
 			sourceTree = "<group>";
@@ -161,6 +168,7 @@
 		D8C734C9218959D100DE637C /* StNesEmu */ = {
 			isa = PBXGroup;
 			children = (
+				D8F2E30F21A2D8FB00BCC23A /* Debugger */,
 				D8C735062189774100DE637C /* Util */,
 				D8C73501218972FC00DE637C /* Types */,
 				D8C734FC218972C800DE637C /* Memory */,
@@ -239,6 +247,15 @@
 				D8C7350E218A2AC600DE637C /* UInt16+Page.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		D8F2E30F21A2D8FB00BCC23A /* Debugger */ = {
+			isa = PBXGroup;
+			children = (
+				D8F2E31621A2DE0F00BCC23A /* DisAsm.swift */,
+				D8F2E31421A2DC8500BCC23A /* UnsignedInteger+HexString.swift */,
+			);
+			path = Debugger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,10 +399,13 @@
 				D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */,
 				D8C735052189732F00DE637C /* IO.swift in Sources */,
 				D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */,
+				D8F2E31321A2D96B00BCC23A /* CPU+Debugger.swift in Sources */,
 				D804697C218D6DEC00D193D7 /* Interrupts.swift in Sources */,
 				D8C734F9218972A500DE637C /* Parser.swift in Sources */,
 				D87FC250219538A7005C9C20 /* CPU.swift in Sources */,
 				D8C734FB218972AF00DE637C /* Cartridge.swift in Sources */,
+				D8F2E31521A2DC8500BCC23A /* UnsignedInteger+HexString.swift in Sources */,
+				D8F2E31721A2DE0F00BCC23A /* DisAsm.swift in Sources */,
 				D8C735032189731600DE637C /* Types.swift in Sources */,
 				D87FC252219538FB005C9C20 /* OpCode.swift in Sources */,
 				D8C7350A2189EC9800DE637C /* OpenDialog.swift in Sources */,

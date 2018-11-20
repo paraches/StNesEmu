@@ -9,7 +9,7 @@
 import Foundation
 
 class Nes: NSObject {
-    var cpubus: CPU_BUS?
+    var cpu: CPU?
     
     private var loaded = false
 
@@ -38,10 +38,15 @@ class Nes: NSObject {
         //
         //  CPU BUS
         //
-        cpubus = CPU_BUS(ram: wRam, programROM: cartridge.programROM)
-        guard let cpubus = cpubus else { return false }
+        let cpubus = CPU_BUS(ram: wRam, programROM: cartridge.programROM)
 
-        loaded = true
+        //
+        //  CPU
+        //
+        cpu = CPU(bus: cpubus, interrupts: interrupts)
+        cpu?.reset()
+        
+        loaded = cpu != nil
         return loaded
     }
 }
