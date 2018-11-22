@@ -181,8 +181,7 @@ extension CPU {
         case "PHA":
             push(A)
         case "PHP":
-            P[F.BREAK] = true
-            pushStatus()
+            push(P | 0x10)
         case "PLA":
             A = pop()
             updateNZ(A)
@@ -278,8 +277,9 @@ extension CPU {
             write(addrOrData, operated)
         case "DCP":
             let operated: Byte = read(addrOrData) &- 1
-            updateNZ(operated)
             write(addrOrData, operated)
+            updateNZ(A &- operated)
+            P[F.CARRY] = A >= operated
         case "ISB":
             let data: Byte = read(addrOrData) &+ 1
             let carry: Byte = P[F.CARRY] ? 1 : 0
@@ -298,13 +298,13 @@ extension CPU {
             updateNZ(A)
             write(addrOrData, data)
         case "RLA":
-            let data: Byte = read(addrOrData)
-            let carry = data[Bit.MSB]
-            let operated = data << 1 + (P[F.CARRY] ? 1 : 0)
-            P[F.CARRY] = carry
-            A = operated & A
-            updateNZ(A)
-            write(addrOrData, data)
+            let carryValue: Byte = P[F.CARRY] ? 0x01 : 0x00
+            let value: Byte = read(addrOrData)
+            P[F.CARRY] = (value & 0x80) != 0
+            let v: Byte = value << 1 | carryValue
+            updateNZ(v)
+            write(addrOrData, v)
+            A &= v
         case "SRE":
             var data: Byte = read(addrOrData)
             P[F.CARRY] = data[Bit.LSB]
@@ -313,16 +313,24 @@ extension CPU {
             updateNZ(A)
             write(addrOrData, data)
         case "RRA":
-            var data: Byte = read(addrOrData)
-            let carry = data & 0x01
-            data = (data >> 1) | (P[F.CARRY] ? 0x80 : 0x00)
-            let operated = data &+ A &+ carry
-            let overflow = (A ^ data) & 0x80 != 0 && (A ^ operated) & 0x80 != 0
-            P[F.OVERFLOW] = overflow
-            updateNZ(Byte(operated))
+            let carryValue: Byte = P[F.CARRY] ? 0x80 : 0x00
+            let value: Byte = read(addrOrData)
+            P[F.CARRY] = (value & 0x01) != 0
+            
+            let v: Byte = (value >> 1) | carryValue
+            updateNZ(v)
+            write(addrOrData, v)
+            
+            //  ADC
+            let accumulator = A
+            let carry: Byte = P[F.CARRY] ? 1 : 0
+            
+            let operated = v &+ A &+ carry
             A = operated
-            P[F.CARRY] = Word(data) &+ Word(A) &+ Word(carry) > 0xFF
-            write(addrOrData, data)
+            updateNZ(A)
+            
+            P[F.CARRY] = Int16(accumulator) + Int16(v) + Int16(carry) > 0x00FF
+            P[F.OVERFLOW] = (accumulator ^ v) & 0x80 == 0 && (A ^ accumulator) & 0x80 != 0
         default:
             print("Not implemented instruction: \(baseName), \(mode)")
         }

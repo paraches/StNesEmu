@@ -46,13 +46,14 @@ extension CPU {
             let addr = Address(page: read(Address(baseAddr &+ 1)), offset: read(Address(baseAddr)))
             return (addr, addr.page != Address(baseAddr).page ? 1 : 0)
         case .postIndexedIndirect:
-            let addOrData = Address(fetch(PC))
-            let baseAddr = Address(page: read(addOrData &+ 1), offset: read(addOrData))
+            let addrOrData = Address(page: 0x00, offset: fetch(PC))
+            let baseAddr = indexYRead(addrOrData)
             let addr = baseAddr &+ Address(Y)
             return (addr, addr.page != baseAddr.page ? 1 : 0)
         case .indirectAbsolute:
             let addrOrData = fetchWord(PC)
-            let addr = Address(page: read(Address(addrOrData.page) | Address(addrOrData.offset &+ 1)), offset: read(addrOrData))
+            let address = Address(page: addrOrData.page, offset: addrOrData.offset &+ 1)
+            let addr = Address(page: read(address), offset: read(addrOrData))
             return (addr, 0)
         }
     }

@@ -29,33 +29,25 @@ extension CPU {
         let mode: CPU.AddressingMode
         let jump: Word
         
-        var description: String {
+        var description: String {  
+            let opcodeString = DisAsm.addressAndCodeString(pc: cpu.PC, opcode: opcode, operand: operand, mode: mode)
             let disAsmString = DisAsm.stepString(self)
-            return codeString() + disAsmString + cpu.description
-        }
-        
-        func codeString() -> String {
-            var operandLow = ""
-            var operandHigh = ""
-            
-            switch mode {
-            case .accumulator, .implied:
-                operandLow = "  "
-                operandHigh = "  "
-            case .immediate, .relative, .zeroPage, .zeroPageX, .zeroPageY, .preIndexedIndirect, .postIndexedIndirect:
-                operandLow = operand.offset.hexString()
-                operandHigh = "  "
-            case .absolute, .absoluteX, .absoluteY, .indirectAbsolute:
-                operandLow = operand.offset.hexString()
-                operandHigh = operand.page.hexString()
-            }
-            return "\(cpu.PC.hexString())  \(opcode.hexString()) \(operandLow) \(operandHigh)    "
+            return opcodeString + disAsmString + cpu.description
         }
     }
 
-    func showStep(opcode: Byte, mode: AddressingMode, pc: Word) {
+    @discardableResult
+    func storeStepInfo(opcode: Byte, mode: AddressingMode, pc: Word) -> StepInfo {
+        let stepInfo = showStep(opcode: opcode, mode: mode, pc: pc)
+        Debugger.addStep(stepInfo)
+        return stepInfo
+    }
+    
+    @discardableResult
+    func showStep(opcode: Byte, mode: AddressingMode, pc: Word) -> StepInfo {
         let stepInfo = createStepInfo(opcode: opcode, mode: mode, pc: pc)
         print(stepInfo)
+        return stepInfo
     }
     
     func createStepInfo(opcode: Byte, mode: AddressingMode, pc: Word) -> StepInfo {
@@ -81,4 +73,5 @@ extension CPU {
     func calcJumpOffset(_ offset: Byte) -> Int {
         return offset < 0x80 ? Int(offset) : Int(offset) - 256
     }
+
 }

@@ -38,8 +38,27 @@ class DisAsm: NSObject {
     }
     
     private static func alignDisAsmString(_ disAsmString: String) -> String {
-        let spaceLength = DisAsmStrWidth - disAsmString.lengthOfBytes(using: String.Encoding.ascii)
+        let spaceLength = DisAsmStrWidth - disAsmString.lengthOfBytes(using: .utf8)
         let spaceString = String(repeating: " ", count: spaceLength)
         return disAsmString + spaceString
     }
+    
+    static func addressAndCodeString(pc: Word, opcode: Byte, operand: Word, mode: CPU.AddressingMode) -> String {
+        var operandLow = ""
+        var operandHigh = ""
+        
+        switch mode {
+        case .accumulator, .implied:
+            operandLow = "  "
+            operandHigh = "  "
+        case .immediate, .relative, .zeroPage, .zeroPageX, .zeroPageY, .preIndexedIndirect, .postIndexedIndirect:
+            operandLow = operand.offset.hexString()
+            operandHigh = "  "
+        case .absolute, .absoluteX, .absoluteY, .indirectAbsolute:
+            operandLow = operand.offset.hexString()
+            operandHigh = operand.page.hexString()
+        }
+        return "\(pc.hexString())  \(opcode.hexString()) \(operandLow) \(operandHigh)    "
+    }
+
 }

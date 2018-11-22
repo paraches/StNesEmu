@@ -74,6 +74,14 @@ class CPU: NSObject, Read, Write {
         bus.write(address, data)
     }
 
+    func indexYRead(_ address: Address) -> Address {
+        let low: Byte  = read(address)
+        let high: Byte = read((address & 0xFF00) | Word(Byte(address & 0xFF) &+ 1))
+        
+        return Address(page: high, offset: low)
+        
+    }
+
     //
     //  Fetch code from memory
     //
@@ -181,13 +189,10 @@ class CPU: NSObject, Read, Write {
         let pc = PC
         let code: Byte = fetch(PC)
         if let opcode = OpCode.opcodeTable[code] {
-            if let modeName = opcode["mode"] as? String,
-                let mode = AddressingMode(rawValue: modeName),
-                let baseName = opcode["baseName"] as? String,
-                let cycle = opcode["cycle"] as? Int {
+            if let (baseName, mode, cycle) = getOpcodeProp(opcode) {
                 let (addrOrData, additionalCycle) = getAddrOrDataWithAdditionalCycle(mode)
                 if debug {
-                    showStep(opcode: code, mode: mode, pc: pc)
+                    storeStepInfo(opcode: code, mode: mode, pc: pc)
                 }
                 execInstruction(baseName, addrOrData, mode)
                 return cycle + additionalCycle + (hasBranched ? 1 : 0)
@@ -195,5 +200,15 @@ class CPU: NSObject, Read, Write {
         }
         
         return 1
+    }
+    
+    func getOpcodeProp(_ opcode: Dictionary<String, Any>) -> (String, AddressingMode, Int)? {
+        if let modeName = opcode["mode"] as? String,
+            let mode = AddressingMode(rawValue: modeName),
+            let baseName = opcode["baseName"] as? String,
+            let cycle = opcode["cycle"] as? Int {
+            return (baseName, mode, cycle)
+        }
+        return nil
     }
 }

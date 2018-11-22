@@ -10,7 +10,7 @@ The code is port from [flownes](https://github.com/bokuweb/flownes) which is wri
 - [x] Nes
 - [x] BUS/Interrupt
 - [x] CPU-1
-- [ ] CPU-2
+- [x] CPU-2 Step Function and nestest
 - [ ] DMA/PPU-1
 - [ ] PPU-2
 - [ ] Renderer

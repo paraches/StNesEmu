@@ -15,6 +15,8 @@
 		D87FC252219538FB005C9C20 /* OpCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FC251219538FB005C9C20 /* OpCode.swift */; };
 		D87FC25421953F3D005C9C20 /* CPU+AddressingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FC25321953F3D005C9C20 /* CPU+AddressingMode.swift */; };
 		D87FC2562195D20F005C9C20 /* CPU+Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FC2552195D20F005C9C20 /* CPU+Instruction.swift */; };
+		D891E98821A3EA81003B56DE /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D891E98721A3EA81003B56DE /* Debugger.swift */; };
+		D891E98A21A3FBC8003B56DE /* NesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D891E98921A3FBC8003B56DE /* NesTest.swift */; };
 		D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CA218959D100DE637C /* AppDelegate.swift */; };
 		D8C734CD218959D100DE637C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CC218959D100DE637C /* ViewController.swift */; };
 		D8C734CF218959D500DE637C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8C734CE218959D500DE637C /* Assets.xcassets */; };
@@ -33,6 +35,11 @@
 		D8F2E31321A2D96B00BCC23A /* CPU+Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31221A2D96B00BCC23A /* CPU+Debugger.swift */; };
 		D8F2E31521A2DC8500BCC23A /* UnsignedInteger+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31421A2DC8500BCC23A /* UnsignedInteger+HexString.swift */; };
 		D8F2E31721A2DE0F00BCC23A /* DisAsm.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31621A2DE0F00BCC23A /* DisAsm.swift */; };
+		D8F2E31921A3DA9800BCC23A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2E31821A3DA9800BCC23A /* Log.swift */; };
+		D8F2E31F21A3DBD700BCC23A /* nestest.log in Resources */ = {isa = PBXBuildFile; fileRef = D8F2E31E21A3DBD700BCC23A /* nestest.log */; };
+		D8F2E32021A3DBD700BCC23A /* nestest.log in Resources */ = {isa = PBXBuildFile; fileRef = D8F2E31E21A3DBD700BCC23A /* nestest.log */; };
+		D8F2E32221A3DC5100BCC23A /* nestest.nes in Resources */ = {isa = PBXBuildFile; fileRef = D8F2E32121A3DC5100BCC23A /* nestest.nes */; };
+		D8F2E32321A3DC5100BCC23A /* nestest.nes in Resources */ = {isa = PBXBuildFile; fileRef = D8F2E32121A3DC5100BCC23A /* nestest.nes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +68,8 @@
 		D87FC251219538FB005C9C20 /* OpCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpCode.swift; sourceTree = "<group>"; };
 		D87FC25321953F3D005C9C20 /* CPU+AddressingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CPU+AddressingMode.swift"; sourceTree = "<group>"; };
 		D87FC2552195D20F005C9C20 /* CPU+Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CPU+Instruction.swift"; sourceTree = "<group>"; };
+		D891E98721A3EA81003B56DE /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		D891E98921A3FBC8003B56DE /* NesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NesTest.swift; sourceTree = "<group>"; };
 		D8C734C7218959D100DE637C /* StNesEmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StNesEmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C734CA218959D100DE637C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C734CC218959D100DE637C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +96,9 @@
 		D8F2E31221A2D96B00BCC23A /* CPU+Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CPU+Debugger.swift"; sourceTree = "<group>"; };
 		D8F2E31421A2DC8500BCC23A /* UnsignedInteger+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+HexString.swift"; sourceTree = "<group>"; };
 		D8F2E31621A2DE0F00BCC23A /* DisAsm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisAsm.swift; sourceTree = "<group>"; };
+		D8F2E31821A3DA9800BCC23A /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		D8F2E31E21A3DBD700BCC23A /* nestest.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nestest.log; sourceTree = "<group>"; };
+		D8F2E32121A3DC5100BCC23A /* nestest.nes */ = {isa = PBXFileReference; lastKnownFileType = file; path = nestest.nes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +198,10 @@
 		D8C734DC218959D600DE637C /* StNesEmuTests */ = {
 			isa = PBXGroup;
 			children = (
+				D8F2E31E21A3DBD700BCC23A /* nestest.log */,
+				D8F2E32121A3DC5100BCC23A /* nestest.nes */,
+				D8F2E31821A3DA9800BCC23A /* Log.swift */,
+				D891E98921A3FBC8003B56DE /* NesTest.swift */,
 				D8C734DD218959D600DE637C /* StNesEmuTests.swift */,
 				D8C734DF218959D600DE637C /* Info.plist */,
 			);
@@ -254,6 +270,7 @@
 			children = (
 				D8F2E31621A2DE0F00BCC23A /* DisAsm.swift */,
 				D8F2E31421A2DC8500BCC23A /* UnsignedInteger+HexString.swift */,
+				D891E98721A3EA81003B56DE /* Debugger.swift */,
 			);
 			path = Debugger;
 			sourceTree = "<group>";
@@ -363,7 +380,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C734CF218959D500DE637C /* Assets.xcassets in Resources */,
+				D8F2E32221A3DC5100BCC23A /* nestest.nes in Resources */,
 				D8C734D2218959D500DE637C /* Main.storyboard in Resources */,
+				D8F2E31F21A3DBD700BCC23A /* nestest.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +390,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F2E32021A3DBD700BCC23A /* nestest.log in Resources */,
+				D8F2E32321A3DC5100BCC23A /* nestest.nes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D845FC6F21914F42001347CA /* PPU_BUS.swift in Sources */,
+				D891E98821A3EA81003B56DE /* Debugger.swift in Sources */,
 				D8C7350F218A2AC600DE637C /* UInt16+Page.swift in Sources */,
 				D87FC2562195D20F005C9C20 /* CPU+Instruction.swift in Sources */,
 				D87CFC1B218D561A00863EBA /* Nes.swift in Sources */,
@@ -417,7 +439,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F2E31921A3DA9800BCC23A /* Log.swift in Sources */,
 				D8C734DE218959D600DE637C /* StNesEmuTests.swift in Sources */,
+				D891E98A21A3FBC8003B56DE /* NesTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
