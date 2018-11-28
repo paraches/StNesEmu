@@ -4,6 +4,8 @@ StNesEmu is NES Emulator written in Swift 4.2.
 This is project to learn Emulator and Swift 4.2 on this [blog](https://www.paraches.com/swift-で-nes-emulator-を作成する).
 The code is port from [flownes](https://github.com/bokuweb/flownes) which is written in JavaScript.
 
+![sample](https://github.com/paraches/StNesEmu/raw/master/Capture/nestest.png)
+![sample](https://github.com/paraches/StNesEmu/raw/master/Capture/sample01.png)
 ## Schedule
 - [x] Parser/Cartridge
 - [x] ROM/RAM
