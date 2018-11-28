@@ -12,6 +12,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var screenView: NSImageView!
     @IBOutlet weak var loadButton: NSButton!
     @IBOutlet weak var stepButton: NSButton!
+    @IBOutlet weak var startButton: NSButton!
+    @IBOutlet weak var fpsTextView: NSTextField!
     
     var nes: Nes?
     
@@ -19,7 +21,9 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        nes = Nes()
+        if let nesView = screenView, let fpsView = fpsTextView {
+            nes = Nes(renderer: CanvasRenderer(nesView: nesView, fpsView: fpsView))
+        }
     }
 
     override var representedObject: Any? {
@@ -36,12 +40,26 @@ class ViewController: NSViewController {
         nes?.cpu?.run(true)
     }
     
+    @IBAction func clickStartButton(_ sender: Any) {
+        if let nes = nes {
+            if nes.running {
+                startButton?.title = "Start"
+                nes.stop()
+            }
+            else {
+                startButton?.title = "Stop"
+                nes.start()
+            }
+        }
+    }
+    
     func loadCartridge() {
         if let fileData = OpenDialog.openCartridge() {
             if let cartridge = Parser.parse(fileData), let nes = nes {
                 print("Cartridge: \(cartridge)")
                 if nes.loadCartridge(cartridge) {
                     stepButton?.isEnabled = true
+                    startButton?.isEnabled = true
                 }
             }
             else {

@@ -11,10 +11,16 @@ import Foundation
 class CPU_BUS: NSObject, Read, Write {
     var programROM: ROM     // Program ROM from Cartridge
     var ram: RAM            // Work RAM 2K
+    var ppu: PPU
+    var dma: DMA
     
-    init(ram: RAM, programROM: ROM) {
+    init(ram: RAM, programROM: ROM, ppu: PPU, dma: DMA) {
         self.programROM = programROM
         self.ram = ram
+        self.ppu = ppu
+        self.dma = dma
+        
+        super.init()
     }
 
     func read(_ address: Address) -> Byte {
@@ -23,6 +29,10 @@ class CPU_BUS: NSObject, Read, Write {
         }
         else if address < 0x2000 {      // Read Work RAM Mirror
             return ram.read(address % 0x0800)
+        }
+        else if address < 0x4000 {
+            let data = ppu.read((address - 0x2000) % 8)
+            return data
         }
         else if address >= 0xC000 {
             if programROM.size() <= 0x4000 {            // Cartridge size 16K
@@ -66,6 +76,12 @@ class CPU_BUS: NSObject, Read, Write {
         }
         else if address < 0x2000 {
             ram.write(address % 0x0800, data)
+        }
+        else if address < 0x4000 {
+            ppu.write((address - 0x2000) % 8, data)
+        }
+        else if address == .oamDMA {
+            dma.write(data)
         }
         else {
             if let ram = programROM as? RAM {

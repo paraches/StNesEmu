@@ -8,14 +8,14 @@
 
 import Foundation
 
+extension Int {
+    static let MSB: Int = 7
+    static let LSB: Int = 0
+}
+
 extension CPU {
-    struct Bit {
-        static let MSB = 7
-        static let LSB = 0
-    }
-    
     func updateNZ(_ data: Byte) {
-        P[F.NEGATIVE] = data[Bit.MSB]
+        P[F.NEGATIVE] = data[.MSB]
         P[F.ZERO] = data == 0
     }
 
@@ -69,20 +69,20 @@ extension CPU {
             updateNZ(A)
         case "ASL":
             if (mode == .accumulator) {
-                P[F.CARRY] = A[Bit.MSB]
+                P[F.CARRY] = A[.MSB]
                 A <<= 1
                 updateNZ(A)
             }
             else {
                 var data: Byte = read(addrOrData)
-                P[F.CARRY] = data[Bit.MSB]
+                P[F.CARRY] = data[.MSB]
                 data <<= 1
                 write(addrOrData, data)
                 updateNZ(data)
             }
         case "BIT":
             let data: Byte = read(addrOrData)
-            P[F.NEGATIVE] = data[Bit.MSB]
+            P[F.NEGATIVE] = data[.MSB]
             P[F.OVERFLOW] = data[6]
             P[F.ZERO] = (A & data) == 0
         case "CMP":
@@ -126,13 +126,13 @@ extension CPU {
             updateNZ(Y)
         case "LSR":
             if mode == .accumulator {
-                P[F.CARRY] = A[Bit.LSB]
+                P[F.CARRY] = A[.LSB]
                 A >>= 1
                 updateNZ(A)
             }
             else {
                 var data: Byte = read(addrOrData)
-                P[F.CARRY] = data[Bit.LSB]
+                P[F.CARRY] = data[.LSB]
                 data >>= 1
                 updateNZ(data)
                 write(addrOrData, data)
@@ -144,13 +144,13 @@ extension CPU {
         case "ROL":
             let carry: Byte = P[F.CARRY] ? 0x01 : 0x00
             if mode == .accumulator {
-                P[F.CARRY] = A[Bit.MSB]
+                P[F.CARRY] = A[.MSB]
                 A = A << 1 | carry
                 updateNZ(A)
             }
             else {
                 let data: Byte = read(addrOrData)
-                P[F.CARRY] = data[Bit.MSB]
+                P[F.CARRY] = data[.MSB]
                 let writeData = data << 1 | carry
                 write(addrOrData, writeData)
                 updateNZ(writeData)
@@ -158,13 +158,13 @@ extension CPU {
         case "ROR":
             let carry: Byte = P[F.CARRY] ? 0x80 : 0x00
             if mode == .accumulator {
-                P[F.CARRY] = A[Bit.LSB]
+                P[F.CARRY] = A[.LSB]
                 A = A >> 1 | carry
                 updateNZ(A)
             }
             else {
                 let data: Byte = read(addrOrData)
-                P[F.CARRY] = data[Bit.LSB]
+                P[F.CARRY] = data[.LSB]
                 let writeData = data >> 1 | carry
                 write(addrOrData, writeData)
                 updateNZ(writeData)
@@ -292,7 +292,7 @@ extension CPU {
             write(addrOrData, data)
         case "SLO":
             var data: Byte = read(addrOrData)
-            P[F.CARRY] = data[Bit.MSB]
+            P[F.CARRY] = data[.MSB]
             data = data << 1
             A |= data
             updateNZ(A)
@@ -307,7 +307,7 @@ extension CPU {
             A &= v
         case "SRE":
             var data: Byte = read(addrOrData)
-            P[F.CARRY] = data[Bit.LSB]
+            P[F.CARRY] = data[.LSB]
             data >>= 1
             A ^= data
             updateNZ(A)

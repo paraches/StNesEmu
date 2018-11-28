@@ -8,7 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		D804697C218D6DEC00D193D7 /* Interrupts.swift in Sources */ = {isa = PBXBuildFile; fileRef = D804697B218D6DEC00D193D7 /* Interrupts.swift */; };
+		D80D8C1421A9749200898C57 /* PPUTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80D8C1321A9749200898C57 /* PPUTest.swift */; };
+		D80D8C1721AA95A200898C57 /* CanvasRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80D8C1621AA95A200898C57 /* CanvasRenderer.swift */; };
+		D80D8C1921AA994300898C57 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80D8C1821AA994300898C57 /* Colors.swift */; };
+		D80D8C1B21AACF7B00898C57 /* ImageBitmapCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80D8C1A21AACF7B00898C57 /* ImageBitmapCreator.swift */; };
+		D80DE5A021AEF04C00200DF2 /* nestest.png in Resources */ = {isa = PBXBuildFile; fileRef = D80DE59F21AEF04C00200DF2 /* nestest.png */; };
+		D80DE5A221AEF05E00200DF2 /* sample01.png in Resources */ = {isa = PBXBuildFile; fileRef = D80DE5A121AEF05E00200DF2 /* sample01.png */; };
 		D845FC6F21914F42001347CA /* PPU_BUS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845FC6E21914F42001347CA /* PPU_BUS.swift */; };
+		D8764A5321A7A59F00E918EA /* PPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8764A5221A7A59F00E918EA /* PPU.swift */; };
+		D8764A5521A7A5A700E918EA /* DMA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8764A5421A7A5A700E918EA /* DMA.swift */; };
+		D8764A5721A7A66000E918EA /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8764A5621A7A66000E918EA /* Palette.swift */; };
+		D8764A5921A7FA9400E918EA /* PPU+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8764A5821A7FA9400E918EA /* PPU+IO.swift */; };
+		D8764A5B21A801BF00E918EA /* PPU+Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8764A5A21A801BF00E918EA /* PPU+Rendering.swift */; };
 		D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CFC17218D332600863EBA /* CPU_BUS.swift */; };
 		D87CFC1B218D561A00863EBA /* Nes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CFC1A218D561A00863EBA /* Nes.swift */; };
 		D87FC250219538A7005C9C20 /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FC24F219538A7005C9C20 /* CPU.swift */; };
@@ -61,7 +72,18 @@
 
 /* Begin PBXFileReference section */
 		D804697B218D6DEC00D193D7 /* Interrupts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interrupts.swift; sourceTree = "<group>"; };
+		D80D8C1321A9749200898C57 /* PPUTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPUTest.swift; sourceTree = "<group>"; };
+		D80D8C1621AA95A200898C57 /* CanvasRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasRenderer.swift; sourceTree = "<group>"; };
+		D80D8C1821AA994300898C57 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D80D8C1A21AACF7B00898C57 /* ImageBitmapCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBitmapCreator.swift; sourceTree = "<group>"; };
+		D80DE59F21AEF04C00200DF2 /* nestest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nestest.png; sourceTree = "<group>"; };
+		D80DE5A121AEF05E00200DF2 /* sample01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sample01.png; sourceTree = "<group>"; };
 		D845FC6E21914F42001347CA /* PPU_BUS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPU_BUS.swift; sourceTree = "<group>"; };
+		D8764A5221A7A59F00E918EA /* PPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPU.swift; sourceTree = "<group>"; };
+		D8764A5421A7A5A700E918EA /* DMA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMA.swift; sourceTree = "<group>"; };
+		D8764A5621A7A66000E918EA /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		D8764A5821A7FA9400E918EA /* PPU+IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PPU+IO.swift"; sourceTree = "<group>"; };
+		D8764A5A21A801BF00E918EA /* PPU+Rendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PPU+Rendering.swift"; sourceTree = "<group>"; };
 		D87CFC17218D332600863EBA /* CPU_BUS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPU_BUS.swift; sourceTree = "<group>"; };
 		D87CFC1A218D561A00863EBA /* Nes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nes.swift; sourceTree = "<group>"; };
 		D87FC24F219538A7005C9C20 /* CPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
@@ -139,6 +161,37 @@
 			path = CPU;
 			sourceTree = "<group>";
 		};
+		D80D8C1521AA955900898C57 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				D80D8C1621AA95A200898C57 /* CanvasRenderer.swift */,
+				D80D8C1821AA994300898C57 /* Colors.swift */,
+				D80D8C1A21AACF7B00898C57 /* ImageBitmapCreator.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		D80DE59E21AEEF4400200DF2 /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				D80DE5A121AEF05E00200DF2 /* sample01.png */,
+				D80DE59F21AEF04C00200DF2 /* nestest.png */,
+			);
+			path = Capture;
+			sourceTree = "<group>";
+		};
+		D8764A5121A7A58900E918EA /* PPU */ = {
+			isa = PBXGroup;
+			children = (
+				D8764A5221A7A59F00E918EA /* PPU.swift */,
+				D8764A5821A7FA9400E918EA /* PPU+IO.swift */,
+				D8764A5A21A801BF00E918EA /* PPU+Rendering.swift */,
+				D8764A5621A7A66000E918EA /* Palette.swift */,
+				D8764A5421A7A5A700E918EA /* DMA.swift */,
+			);
+			path = PPU;
+			sourceTree = "<group>";
+		};
 		D87CFC16218D32FA00863EBA /* Bus */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +212,7 @@
 		D8C734BE218959D100DE637C = {
 			isa = PBXGroup;
 			children = (
+				D80DE59E21AEEF4400200DF2 /* Capture */,
 				D8C7350B2189F6D700DE637C /* README.md */,
 				D8C734C9218959D100DE637C /* StNesEmu */,
 				D8C734DC218959D600DE637C /* StNesEmuTests */,
@@ -202,6 +256,7 @@
 				D8F2E32121A3DC5100BCC23A /* nestest.nes */,
 				D8F2E31821A3DA9800BCC23A /* Log.swift */,
 				D891E98921A3FBC8003B56DE /* NesTest.swift */,
+				D80D8C1321A9749200898C57 /* PPUTest.swift */,
 				D8C734DD218959D600DE637C /* StNesEmuTests.swift */,
 				D8C734DF218959D600DE637C /* Info.plist */,
 			);
@@ -220,6 +275,8 @@
 		D8C734F62189727800DE637C /* Nes */ = {
 			isa = PBXGroup;
 			children = (
+				D80D8C1521AA955900898C57 /* Renderer */,
+				D8764A5121A7A58900E918EA /* PPU */,
 				D804697A218D6DA400D193D7 /* CPU */,
 				D87CFC19218D560700863EBA /* Nes */,
 				D87CFC16218D32FA00863EBA /* Bus */,
@@ -380,6 +437,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C734CF218959D500DE637C /* Assets.xcassets in Resources */,
+				D80DE5A021AEF04C00200DF2 /* nestest.png in Resources */,
+				D80DE5A221AEF05E00200DF2 /* sample01.png in Resources */,
 				D8F2E32221A3DC5100BCC23A /* nestest.nes in Resources */,
 				D8C734D2218959D500DE637C /* Main.storyboard in Resources */,
 				D8F2E31F21A3DBD700BCC23A /* nestest.log in Resources */,
@@ -409,15 +468,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8764A5B21A801BF00E918EA /* PPU+Rendering.swift in Sources */,
+				D80D8C1921AA994300898C57 /* Colors.swift in Sources */,
 				D845FC6F21914F42001347CA /* PPU_BUS.swift in Sources */,
+				D8764A5321A7A59F00E918EA /* PPU.swift in Sources */,
 				D891E98821A3EA81003B56DE /* Debugger.swift in Sources */,
 				D8C7350F218A2AC600DE637C /* UInt16+Page.swift in Sources */,
 				D87FC2562195D20F005C9C20 /* CPU+Instruction.swift in Sources */,
 				D87CFC1B218D561A00863EBA /* Nes.swift in Sources */,
 				D8C734FE218972EA00DE637C /* RAM.swift in Sources */,
+				D80D8C1B21AACF7B00898C57 /* ImageBitmapCreator.swift in Sources */,
 				D8C734CD218959D100DE637C /* ViewController.swift in Sources */,
 				D8C73500218972F200DE637C /* ROM.swift in Sources */,
 				D8C735082189775500DE637C /* UInt8+Bit.swift in Sources */,
+				D80D8C1721AA95A200898C57 /* CanvasRenderer.swift in Sources */,
 				D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */,
 				D8C735052189732F00DE637C /* IO.swift in Sources */,
 				D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */,
@@ -427,11 +491,14 @@
 				D87FC250219538A7005C9C20 /* CPU.swift in Sources */,
 				D8C734FB218972AF00DE637C /* Cartridge.swift in Sources */,
 				D8F2E31521A2DC8500BCC23A /* UnsignedInteger+HexString.swift in Sources */,
+				D8764A5721A7A66000E918EA /* Palette.swift in Sources */,
 				D8F2E31721A2DE0F00BCC23A /* DisAsm.swift in Sources */,
+				D8764A5921A7FA9400E918EA /* PPU+IO.swift in Sources */,
 				D8C735032189731600DE637C /* Types.swift in Sources */,
 				D87FC252219538FB005C9C20 /* OpCode.swift in Sources */,
 				D8C7350A2189EC9800DE637C /* OpenDialog.swift in Sources */,
 				D87FC25421953F3D005C9C20 /* CPU+AddressingMode.swift in Sources */,
+				D8764A5521A7A5A700E918EA /* DMA.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8F2E31921A3DA9800BCC23A /* Log.swift in Sources */,
+				D80D8C1421A9749200898C57 /* PPUTest.swift in Sources */,
 				D8C734DE218959D600DE637C /* StNesEmuTests.swift in Sources */,
 				D891E98A21A3FBC8003B56DE /* NesTest.swift in Sources */,
 			);

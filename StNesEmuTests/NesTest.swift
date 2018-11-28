@@ -10,8 +10,8 @@ import XCTest
 @testable import StNesEmu
 
 class NesTest: XCTestCase {
-    
     var cpu: CPU?
+    var ppu: PPU?
     
     override func setUp() {
         super.setUp()
@@ -29,9 +29,15 @@ class NesTest: XCTestCase {
             let byteData: Byte = cartridge.characterROM.read(i)
             characterMem.write(i, byteData)
         }
+        let ppuBus = PPU_BUS(characterRAM: characterMem)
         let interrupts = Interrupts()
+        
+        let ppu = PPU(bus: ppuBus, interrupts: interrupts, config: PPU.PPUConfig(isHorizontalMirror: false))
+        self.ppu = ppu
+        
         let wRam = RAM(memory: [UInt8](repeating: 0x00, count: 0x2000))
-        let cpubus = CPU_BUS(ram: wRam, programROM: cartridge.programROM)
+        let dma = DMA(ram: wRam, ppu: ppu)
+        let cpubus = CPU_BUS(ram: wRam, programROM: cartridge.programROM, ppu: ppu, dma: dma)
         cpu = CPU(bus: cpubus, interrupts: interrupts)
         cpu?.reset()
     }
@@ -43,6 +49,7 @@ class NesTest: XCTestCase {
     
     func testNesTest() {
         XCTAssertNotNil(cpu)
+        XCTAssertNotNil(ppu)
         
         let log = loadLog()
         XCTAssertTrue(log.count > 0)

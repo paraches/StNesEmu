@@ -11,9 +11,9 @@ The code is port from [flownes](https://github.com/bokuweb/flownes) which is wri
 - [x] BUS/Interrupt
 - [x] CPU-1
 - [x] CPU-2 Step Function and nestest
-- [ ] DMA/PPU-1
+- [x] Renderer/PPU-1/DMA
 - [ ] PPU-2
-- [ ] Renderer
+- [ ] PPU-3
 - [ ] KeyPad
 
 Blog page will be update on each milestone. 

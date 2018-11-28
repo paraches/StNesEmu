@@ -10,15 +10,35 @@ import XCTest
 @testable import StNesEmu
 
 class StNesEmuTests: XCTestCase {
-
-    let cpu = CPU(bus: CPU_BUS(ram: RAM(memory: [UInt8](repeating: 0x1A, count: 0x2000)),
-                               programROM: RAM(memory: [UInt8](repeating: 0x1A, count: 0x8000))),
-                  interrupts: Interrupts())
+    var cpu: CPU?
+    var ppu: PPU?
 
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        cpu.reset()
+        //
+        //  Prepare nestest.nes cartridge and make CPU with it
+        //
+        guard let url = Bundle.main.url(forResource: "nestest", withExtension: "nes") else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        guard let cartridge = Parser.parse(data) else { return }
+        
+        let characterMem = RAM(memory: [UInt8](repeating: 0x1A, count: 0x4000)) // Create 16K RAM
+        for i in 0..<cartridge.characterROM.size() {
+            let byteData: Byte = cartridge.characterROM.read(i)
+            characterMem.write(i, byteData)
+        }
+        let ppuBus = PPU_BUS(characterRAM: characterMem)
+        let interrupts = Interrupts()
+        
+        let ppu = PPU(bus: ppuBus, interrupts: interrupts, config: PPU.PPUConfig(isHorizontalMirror: false))
+        self.ppu = ppu
+        
+        let wRam = RAM(memory: [UInt8](repeating: 0x1A, count: 0x2000))
+        let dma = DMA(ram: wRam, ppu: ppu)
+        let cpubus = CPU_BUS(ram: wRam, programROM: RAM(memory: [UInt8](repeating: 0x1A, count: 0x8000)), ppu: ppu, dma: dma)
+        cpu = CPU(bus: cpubus, interrupts: interrupts)
+        cpu?.reset()
     }
     
     override func tearDown() {
@@ -29,6 +49,9 @@ class StNesEmuTests: XCTestCase {
     func testReset() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.reset()
         XCTAssertEqual(cpu.P, 0x24)
         XCTAssertEqual(cpu.PC, 0x1A1A)
@@ -42,6 +65,9 @@ class StNesEmuTests: XCTestCase {
     //  CPU
     //
     func testFetch() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x0200
         let code: Byte = cpu.fetch(0x0200)
         XCTAssertEqual(code, 0x1A)
@@ -49,6 +75,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testFetchWord() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x0200
         cpu.bus.ram.write(0x0201, Byte(0x56))
         let code: Word = cpu.fetchWord(0x0200)
@@ -57,6 +86,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testPush() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.push(0x56)
         let v1: Byte = cpu.read(0x01FD)
         XCTAssertEqual(cpu.SP, 0xFC)
@@ -70,6 +102,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testPop() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.bus.write(0x01FE, Byte(0x56))
         let v1 = cpu.pop()
         XCTAssertEqual(v1, 0x56)
@@ -83,6 +118,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testStep() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x0200
         let cycle = cpu.run()
         XCTAssertEqual(cpu.PC, 0x0201)
@@ -93,6 +131,9 @@ class StNesEmuTests: XCTestCase {
     //  Instructions
     //
     func testLDA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.execInstruction("LDA", 0x5F, .immediate)
         XCTAssertEqual(cpu.A, 0x5F)
         
@@ -101,6 +142,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testLDX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.execInstruction("LDX", 0x5F, .immediate)
         XCTAssertEqual(cpu.X, 0x5F)
         
@@ -109,6 +153,9 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testLDY() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.execInstruction("LDY", 0x5F, .immediate)
         XCTAssertEqual(cpu.Y, 0x5F)
         
@@ -117,6 +164,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testSTA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0x12
         cpu.execInstruction("STA", 0x1234, .absolute)
         let v: Byte = cpu.read(0x1234)
@@ -124,6 +174,9 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testSTX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.X = 0x12
         cpu.execInstruction("STX", 0x1234, .absolute)
         let v: Byte = cpu.read(0x1234)
@@ -131,6 +184,9 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testSTY() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.Y = 0x12
         cpu.execInstruction("STY", 0x1234, .absolute)
         let v: Byte = cpu.read(0x1234)
@@ -138,42 +194,63 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testTAX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0x12
         cpu.execInstruction("TAX", 0x00, .implied)
         XCTAssertEqual(cpu.X, 0x12)
     }
     
     func testTAY() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0x12
         cpu.execInstruction("TAY", 0x00, .implied)
         XCTAssertEqual(cpu.Y, 0x12)
     }
     
     func testTSX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.SP = 0x12
         cpu.execInstruction("TSX", 0x00, .implied)
         XCTAssertEqual(cpu.X, 0x12)
     }
     
     func testTXA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.X = 0x12
         cpu.execInstruction("TXA", 0x00, .implied)
         XCTAssertEqual(cpu.A, 0x12)
     }
     
     func testTXS()  {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.X = 0x12
         cpu.execInstruction("TXS", 0x00, .implied)
         XCTAssertEqual(cpu.SP, 0x12)
     }
     
     func testTYA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.Y = 0x12
         cpu.execInstruction("TYA", 0x00, .immediate)
         XCTAssertEqual(cpu.A, 0x12)
     }
 
     func testADC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         //  check std adc
         cpu.A = 0x12
         cpu.P[CPU.F.CARRY] = false
@@ -218,6 +295,9 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testAND() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0xF5
         cpu.execInstruction("AND", 0x5F, .immediate)
         XCTAssertEqual(cpu.A, 0x55)
@@ -228,6 +308,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testALS() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0x40
         cpu.execInstruction("ASL", 0x00, .accumulator)
         XCTAssertEqual(cpu.A, 0x80)
@@ -264,6 +347,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testBIT() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         //  Zero flag
         cpu.write(0x1000, Byte(0x0F))
         cpu.A = 0xF0
@@ -299,6 +385,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testCMP() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         //  Carry Flag
         cpu.A = 0x02
         cpu.execInstruction("CMP", 0x01, .immediate)
@@ -328,6 +417,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testCPX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         //  Carry Flag
         cpu.X = 0x02
         cpu.execInstruction("CPX", 0x01, .immediate)
@@ -358,6 +450,9 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testCPY() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         //  Carry Flag
         cpu.Y = 0x02
         cpu.execInstruction("CPY", 0x01, .immediate)
@@ -388,6 +483,9 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testDEC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.write(0x1234, Byte(0x10))
         cpu.execInstruction("DEC", 0x1234, .absolute)
         let v1: Byte = cpu.read(0x1234)
@@ -395,24 +493,36 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testDEX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.X = 0x10
         cpu.execInstruction("DEX", 0x00, .implied)
         XCTAssertEqual(cpu.X, 0x0F)
     }
     
     func testDEY() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.Y = 0x10
         cpu.execInstruction("DEY", 0x00, .implied)
         XCTAssertEqual(cpu.Y, 0x0F)
     }
     
     func testEOR() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0xF5
         cpu.execInstruction("EOR", 0x5F, .immediate)
         XCTAssertEqual(cpu.A, 0xAA)
     }
     
     func testINC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.write(0x1234, Byte(0x10))
         cpu.execInstruction("INC", 0x1234, .absolute)
         let v: Byte = cpu.read(0x1234)
@@ -420,18 +530,27 @@ class StNesEmuTests: XCTestCase {
     }
 
     func testINX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.X = 0x10
         cpu.execInstruction("INX", 0x00, .implied)
         XCTAssertEqual(cpu.X, 0x11)
     }
 
     func testINY() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.Y = 0x10
         cpu.execInstruction("INY", 0x00, .implied)
         XCTAssertEqual(cpu.Y, 0x11)
     }
     
     func testLSR() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         //  accumulator
         cpu.A = 0x40
         cpu.execInstruction("LSR", 0x00, .accumulator)
@@ -469,6 +588,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testORA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0x01
         cpu.execInstruction("ORA", 0xF0, .immediate)
         XCTAssertEqual(cpu.A, 0xF1)
@@ -480,6 +602,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testROL() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.CARRY] = true
         cpu.A = 0x40
         cpu.execInstruction("ROL", 0x00, .accumulator)
@@ -519,6 +644,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testROR() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.CARRY] = true
         cpu.A = 0x04
         cpu.execInstruction("ROR", 0x00, .accumulator)
@@ -558,6 +686,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testSBC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.CARRY] = true
         cpu.A = 0x50
         cpu.execInstruction("SBC", 0xF0, .immediate)
@@ -589,6 +720,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testPHA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.A = 0x24
         cpu.execInstruction("PHA", 0x00, .implied)
         let v: Byte = cpu.read(0x0100 | Address(cpu.SP + 1))
@@ -596,6 +730,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testPHP() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P = 0x34
         cpu.execInstruction("PHP", 0x00, .implied)
         let v: Byte = cpu.read(0x0100 | Address(cpu.SP + 1))
@@ -604,24 +741,36 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testPLA() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.write(0x0100 | Address(cpu.SP &+ 1), Byte(0x24))
         cpu.execInstruction("PLA", 0x00, .implied)
         XCTAssertEqual(cpu.A, 0x24)
     }
     
     func testPLP() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.write(0x0100 | Address(cpu.SP &+ 1), Byte(0x24))
         cpu.execInstruction("PLP", 0x00, .implied)
         XCTAssertEqual(cpu.P, 0x24)
     }
     
     func testJMP() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0
         cpu.execInstruction("JMP", 0x1234, .indirectAbsolute)
         XCTAssertEqual(cpu.PC, 0x1234)
     }
     
     func testJSR() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x6543
         cpu.execInstruction("JSR", 0x1234, .relative)
         
@@ -632,6 +781,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testRTS() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.write(0x0100 | Address(cpu.SP - 1), Word(0x1233))
         cpu.SP = cpu.SP &- 2
         cpu.execInstruction("RTS", 0x00, .implied)
@@ -639,6 +791,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testRTI() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0xABBA
         cpu.P = 0x24
         cpu.write(0xFFFE, Address(0x1234))
@@ -655,161 +810,209 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testBCC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.CARRY] = true
-        cpu.execInstruction("BCC", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BCC", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.CARRY] = false
-        cpu.execInstruction("BCC", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BCC", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
     }
     
     func testBCS() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.CARRY] = true
-        cpu.execInstruction("BCS", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BCS", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.CARRY] = false
-        cpu.execInstruction("BCS", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BCS", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
     }
     
     func testBEQ() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.ZERO] = true
-        cpu.execInstruction("BEQ", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BEQ", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.ZERO] = false
-        cpu.execInstruction("BEQ", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BEQ", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
     }
     
     func testBNE() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.ZERO] = true
-        cpu.execInstruction("BNE", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BNE", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.ZERO] = false
-        cpu.execInstruction("BNE", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BNE", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
     }
     
     func testBMI() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.NEGATIVE] = true
-        cpu.execInstruction("BMI", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BMI", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.NEGATIVE] = false
-        cpu.execInstruction("BMI", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BMI", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
     }
     
     func testBPL() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.NEGATIVE] = true
-        cpu.execInstruction("BPL", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BPL", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.NEGATIVE] = false
-        cpu.execInstruction("BPL", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BPL", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
     }
     
     func testBVS() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.OVERFLOW] = true
-        cpu.execInstruction("BVS", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BVS", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.OVERFLOW] = false
-        cpu.execInstruction("BVS", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BVS", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
 
     }
     
     func testBVC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.OVERFLOW] = true
-        cpu.execInstruction("BVC", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BVC", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x4000)
         
         cpu.PC = 0x4000
         
         cpu.P[CPU.F.OVERFLOW] = false
-        cpu.execInstruction("BVC", calcRelative(0xF0), .relative)
+        cpu.execInstruction("BVC", calcRelative(0xF0, cpu.PC), .relative)
         XCTAssertEqual(cpu.PC, 0x3FF0)
     }
     
     func testCLC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.CARRY] = true
         cpu.execInstruction("CLC", 0x00, .implied)
         XCTAssertFalse(cpu.P[CPU.F.CARRY])
     }
     
     func testCLD() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.DECIMAL] = true
         cpu.execInstruction("CLD", 0x00, .implied)
         XCTAssertFalse(cpu.P[CPU.F.DECIMAL])
     }
     
     func testCLI() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.INTERRUPT] = true
         cpu.execInstruction("CLI", 0x00, .implied)
         XCTAssertFalse(cpu.P[CPU.F.INTERRUPT])
     }
     
     func testCLV() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.OVERFLOW] = true
         cpu.execInstruction("CLV", 0x00, .implied)
         XCTAssertFalse(cpu.P[CPU.F.OVERFLOW])
     }
     
     func testSEC() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.CARRY] = false
         cpu.execInstruction("SEC", 0x00, .implied)
         XCTAssertTrue(cpu.P[CPU.F.CARRY])
     }
     
     func testSED() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.DECIMAL] = false
         cpu.execInstruction("SED", 0x00, .implied)
         XCTAssertTrue(cpu.P[CPU.F.DECIMAL])
     }
     
     func testSEI() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P[CPU.F.INTERRUPT] = false
         cpu.execInstruction("SEI", 0x00, .implied)
         XCTAssertTrue(cpu.P[CPU.F.INTERRUPT])
     }
     
     func testBRK() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0xABBA
         cpu.P = 0x20
         cpu.write(0xFFFE, Word(0x1234))
@@ -826,6 +1029,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testNOP() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.PC = 0x1234
         cpu.P = 0x24
         cpu.SP = 0xFD
@@ -841,6 +1047,9 @@ class StNesEmuTests: XCTestCase {
 //  Unofficial instruction
 //
     func testLAX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.write(0x1234, Byte(0x56))
         
         cpu.execInstruction("LAX", 0x1234, .absolute)
@@ -850,6 +1059,9 @@ class StNesEmuTests: XCTestCase {
     }
     
     func testSAX() {
+        XCTAssertNotNil(cpu)
+        guard let cpu = cpu else { return }
+
         cpu.P = 0x24
         cpu.A = 0x78
         cpu.X = 0xFF
@@ -861,8 +1073,8 @@ class StNesEmuTests: XCTestCase {
         XCTAssertEqual(cpu.P, 0x24)
     }
 
-    func calcRelative(_ baseAddr: Byte) -> Address {
-        let addr = baseAddr < 0x0080 ? Address(baseAddr) &+ cpu.PC : Address(baseAddr) &+ cpu.PC &- 256
+    func calcRelative(_ baseAddr: Byte, _ pc: Address) -> Address {
+        let addr = baseAddr < 0x0080 ? Address(baseAddr) &+ pc : Address(baseAddr) &+ pc &- 256
         return addr
     }
     

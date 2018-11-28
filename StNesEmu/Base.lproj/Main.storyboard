@@ -725,9 +725,29 @@
                                     <action selector="clickLoadButton:" target="XfG-lQ-9wD" id="Enp-Ze-RYX"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e8U-sp-77z">
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JE7-N2-0YG">
                                 <rect key="frame" x="396" y="46" width="70" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1U7-D8-47w">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="clickStartButton:" target="XfG-lQ-9wD" id="EZt-4r-ar0"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VxF-sb-BdX">
+                                <rect key="frame" x="388" y="243" width="74" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="fps" id="bFL-9P-Cun">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e8U-sp-77z">
+                                <rect key="frame" x="396" y="79" width="70" height="32"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <buttonCell key="cell" type="push" title="Step" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aYU-09-IPY">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -739,8 +759,10 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="fpsTextView" destination="VxF-sb-BdX" id="auD-d9-YRD"/>
                         <outlet property="loadButton" destination="XCv-Dh-Scq" id="MPD-jV-pCE"/>
                         <outlet property="screenView" destination="w6d-Ki-6m4" id="MWY-2H-uFt"/>
+                        <outlet property="startButton" destination="JE7-N2-0YG" id="3iI-Lj-DSf"/>
                         <outlet property="stepButton" destination="e8U-sp-77z" id="T5W-35-58P"/>
                     </connections>
                 </viewController>
