@@ -73,6 +73,16 @@ class PPU: NSObject {
         }
     }
     
+    var isSpriteBig: Bool {
+        get {
+            return registers[0x00][5]
+        }
+        set {
+            registers[0x00][5] = newValue
+        }
+    }
+    
+    
     var hasVBlankIRQEnabled: Bool {
         get {
             return registers[0][7]
