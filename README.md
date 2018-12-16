@@ -16,7 +16,7 @@ The code is port from [flownes](https://github.com/bokuweb/flownes) which is wri
 - [x] Renderer/PPU-1/DMA
 - [x] PPU-2/DMA
 - [x] PPU-3
-- [ ] KeyPad
+- [x] KeyPad
 
 Blog page will be update on each milestone. 
 
