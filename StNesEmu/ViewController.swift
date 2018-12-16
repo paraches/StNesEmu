@@ -19,19 +19,19 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         if let nesView = screenView, let fpsView = fpsTextView {
-            nes = Nes(renderer: CanvasRenderer(nesView: nesView, fpsView: fpsView))
+            nes = Nes(renderer: CanvasRenderer(nesView: nesView, fpsView: fpsView), gameInputController: GameInputController())
         }
     }
-
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
-
+    
     @IBAction func clickLoadButton(_ sender: Any) {
         loadCartridge()
     }
@@ -68,4 +68,3 @@ class ViewController: NSViewController {
         }
     }
 }
-

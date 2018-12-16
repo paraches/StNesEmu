@@ -28,6 +28,9 @@
 		D87FC2562195D20F005C9C20 /* CPU+Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FC2552195D20F005C9C20 /* CPU+Instruction.swift */; };
 		D891E98821A3EA81003B56DE /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D891E98721A3EA81003B56DE /* Debugger.swift */; };
 		D891E98A21A3FBC8003B56DE /* NesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D891E98921A3FBC8003B56DE /* NesTest.swift */; };
+		D8AD80A521C62A1100C91074 /* KeyPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80A421C62A1100C91074 /* KeyPad.swift */; };
+		D8AD80A721C62A3900C91074 /* KeyPadProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80A621C62A3900C91074 /* KeyPadProtocols.swift */; };
+		D8AD80A921C62BAF00C91074 /* GameInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80A821C62BAF00C91074 /* GameInputController.swift */; };
 		D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CA218959D100DE637C /* AppDelegate.swift */; };
 		D8C734CD218959D100DE637C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CC218959D100DE637C /* ViewController.swift */; };
 		D8C734CF218959D500DE637C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8C734CE218959D500DE637C /* Assets.xcassets */; };
@@ -92,6 +95,9 @@
 		D87FC2552195D20F005C9C20 /* CPU+Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CPU+Instruction.swift"; sourceTree = "<group>"; };
 		D891E98721A3EA81003B56DE /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		D891E98921A3FBC8003B56DE /* NesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NesTest.swift; sourceTree = "<group>"; };
+		D8AD80A421C62A1100C91074 /* KeyPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPad.swift; sourceTree = "<group>"; };
+		D8AD80A621C62A3900C91074 /* KeyPadProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadProtocols.swift; sourceTree = "<group>"; };
+		D8AD80A821C62BAF00C91074 /* GameInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInputController.swift; sourceTree = "<group>"; };
 		D8C734C7218959D100DE637C /* StNesEmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StNesEmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C734CA218959D100DE637C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C734CC218959D100DE637C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +215,15 @@
 			path = Nes;
 			sourceTree = "<group>";
 		};
+		D8AD80A321C629F000C91074 /* KeyPad */ = {
+			isa = PBXGroup;
+			children = (
+				D8AD80A421C62A1100C91074 /* KeyPad.swift */,
+				D8AD80A621C62A3900C91074 /* KeyPadProtocols.swift */,
+			);
+			path = KeyPad;
+			sourceTree = "<group>";
+		};
 		D8C734BE218959D100DE637C = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +255,7 @@
 				D8C734FC218972C800DE637C /* Memory */,
 				D8C734F62189727800DE637C /* Nes */,
 				D8C734CA218959D100DE637C /* AppDelegate.swift */,
+				D8AD80A821C62BAF00C91074 /* GameInputController.swift */,
 				D8C734CC218959D100DE637C /* ViewController.swift */,
 				D8C734CE218959D500DE637C /* Assets.xcassets */,
 				D8C734D0218959D500DE637C /* Main.storyboard */,
@@ -275,6 +291,7 @@
 		D8C734F62189727800DE637C /* Nes */ = {
 			isa = PBXGroup;
 			children = (
+				D8AD80A321C629F000C91074 /* KeyPad */,
 				D80D8C1521AA955900898C57 /* Renderer */,
 				D8764A5121A7A58900E918EA /* PPU */,
 				D804697A218D6DA400D193D7 /* CPU */,
@@ -473,6 +490,7 @@
 				D845FC6F21914F42001347CA /* PPU_BUS.swift in Sources */,
 				D8764A5321A7A59F00E918EA /* PPU.swift in Sources */,
 				D891E98821A3EA81003B56DE /* Debugger.swift in Sources */,
+				D8AD80A521C62A1100C91074 /* KeyPad.swift in Sources */,
 				D8C7350F218A2AC600DE637C /* UInt16+Page.swift in Sources */,
 				D87FC2562195D20F005C9C20 /* CPU+Instruction.swift in Sources */,
 				D87CFC1B218D561A00863EBA /* Nes.swift in Sources */,
@@ -493,6 +511,8 @@
 				D8F2E31521A2DC8500BCC23A /* UnsignedInteger+HexString.swift in Sources */,
 				D8764A5721A7A66000E918EA /* Palette.swift in Sources */,
 				D8F2E31721A2DE0F00BCC23A /* DisAsm.swift in Sources */,
+				D8AD80A921C62BAF00C91074 /* GameInputController.swift in Sources */,
+				D8AD80A721C62A3900C91074 /* KeyPadProtocols.swift in Sources */,
 				D8764A5921A7FA9400E918EA /* PPU+IO.swift in Sources */,
 				D8C735032189731600DE637C /* Types.swift in Sources */,
 				D87FC252219538FB005C9C20 /* OpCode.swift in Sources */,

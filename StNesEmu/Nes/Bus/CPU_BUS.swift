@@ -13,16 +13,18 @@ class CPU_BUS: NSObject, Read, Write {
     var ram: RAM            // Work RAM 2K
     var ppu: PPU
     var dma: DMA
+    var keyPad: KeyPad
     
-    init(ram: RAM, programROM: ROM, ppu: PPU, dma: DMA) {
+    init(ram: RAM, programROM: ROM, ppu: PPU, dma: DMA, keyPad: KeyPad) {
         self.programROM = programROM
         self.ram = ram
         self.ppu = ppu
         self.dma = dma
+        self.keyPad = keyPad
         
         super.init()
     }
-
+    
     func read(_ address: Address) -> Byte {
         if address < 0x0800 {           // Read Work RAM
             return ram.read(address)
@@ -33,6 +35,10 @@ class CPU_BUS: NSObject, Read, Write {
         else if address < 0x4000 {
             let data = ppu.read((address - 0x2000) % 8)
             return data
+        }
+        else if address == 0x4016 {     // KeyPad
+            let val: Byte = keyPad.read() ? 1 : 0
+            return val
         }
         else if address >= 0xC000 {
             if programROM.size() <= 0x4000 {            // Cartridge size 16K
@@ -83,6 +89,9 @@ class CPU_BUS: NSObject, Read, Write {
         else if address == .oamDMA {
             dma.write(data)
         }
+        else if address == 0x4016 {
+            keyPad.write(data)
+        }
         else {
             if let ram = programROM as? RAM {
                 if ram.size() > 0x4000 {
@@ -94,7 +103,7 @@ class CPU_BUS: NSObject, Read, Write {
             }
         }
     }
-
+    
     func write(_ address: Address, _ data: Word) {
         if address < 0x0800 {
             ram.write(address, data)
@@ -114,3 +123,4 @@ class CPU_BUS: NSObject, Read, Write {
         }
     }
 }
+

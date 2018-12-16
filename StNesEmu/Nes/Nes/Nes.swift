@@ -11,6 +11,7 @@ import QuartzCore
 
 class Nes: NSObject {
     var renderer: CanvasRenderer
+    var gameInputController: KeyPadSetProtocol
     
     var cpu: CPU?
     var ppu: PPU?
@@ -18,11 +19,12 @@ class Nes: NSObject {
     
     private var loaded = false
     var running = false
-
+    
     fileprivate var displayLink: CVDisplayLink?
-
-    init(renderer: CanvasRenderer) {
+    
+    init(renderer: CanvasRenderer, gameInputController: KeyPadSetProtocol) {
         self.renderer = renderer
+        self.gameInputController = gameInputController
         
         super.init()
         
@@ -44,7 +46,7 @@ class Nes: NSObject {
         CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
         CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
     }
-
+    
     @discardableResult
     func loadCartridge(_ cartridge: Cartridge) -> Bool {
         //
@@ -61,23 +63,29 @@ class Nes: NSObject {
         //
         let ppuBus = PPU_BUS(characterRAM: characterMem)
         let interrupts = Interrupts()
-
+        
         self.ppu = PPU(bus: ppuBus, interrupts: interrupts, config: PPU.PPUConfig(isHorizontalMirror: false))
         guard let ppu = self.ppu else { return false }
-
+        
         //
         //  Working RAM 2K
         //
         let wRam = RAM(memory: [UInt8](repeating: 0x00, count: 0x0800))
-
+        
         self.dma = DMA(ram: wRam, ppu: ppu)
         guard let dma = dma else { return false }
         
         //
+        //  KeyPad
+        //
+        let keyPad = KeyPad()
+        self.gameInputController.setKeyPad(keyPad: keyPad)
+        
+        //
         //  CPU BUS
         //
-        let cpubus = CPU_BUS(ram: wRam, programROM: cartridge.programROM, ppu: ppu, dma: dma)
-
+        let cpubus = CPU_BUS(ram: wRam, programROM: cartridge.programROM, ppu: ppu, dma: dma, keyPad: keyPad)
+        
         //
         //  CPU
         //
