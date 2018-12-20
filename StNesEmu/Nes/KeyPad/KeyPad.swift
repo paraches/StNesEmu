@@ -32,13 +32,13 @@ class KeyPad: NSObject, KeyPadProtocol {
         super.init()
     }
     
-    func onKeyDown(index: Int) {
+    func onKeyDown(_ index: Int) {
         if index < keyBuffer.count {
             keyBuffer[index] = true
         }
     }
     
-    func onKeyUp(index: Int) {
+    func onKeyUp(_ index: Int) {
         if index < keyBuffer.count {
             keyBuffer[index] = false
         }

@@ -9,10 +9,10 @@
 import Foundation
 
 protocol KeyPadProtocol {
-    func onKeyDown(index: Int)
-    func onKeyUp(index: Int)
+    func onKeyDown(_ index: Int)
+    func onKeyUp(_ index: Int)
 }
 
 protocol KeyPadSetProtocol {
-    func setKeyPad(keyPad: KeyPadProtocol)
+    func setKeyPad(_ keyPad: KeyPadProtocol)
 }

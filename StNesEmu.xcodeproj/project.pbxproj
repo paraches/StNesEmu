@@ -31,6 +31,8 @@
 		D8AD80A521C62A1100C91074 /* KeyPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80A421C62A1100C91074 /* KeyPad.swift */; };
 		D8AD80A721C62A3900C91074 /* KeyPadProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80A621C62A3900C91074 /* KeyPadProtocols.swift */; };
 		D8AD80A921C62BAF00C91074 /* GameInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80A821C62BAF00C91074 /* GameInputController.swift */; };
+		D8AD80AC21C6AFCA00C91074 /* HIDDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80AB21C6AFCA00C91074 /* HIDDevice.swift */; };
+		D8AD80AE21C6AFD400C91074 /* HIDDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AD80AD21C6AFD400C91074 /* HIDDeviceMonitor.swift */; };
 		D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CA218959D100DE637C /* AppDelegate.swift */; };
 		D8C734CD218959D100DE637C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C734CC218959D100DE637C /* ViewController.swift */; };
 		D8C734CF218959D500DE637C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8C734CE218959D500DE637C /* Assets.xcassets */; };
@@ -98,6 +100,8 @@
 		D8AD80A421C62A1100C91074 /* KeyPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPad.swift; sourceTree = "<group>"; };
 		D8AD80A621C62A3900C91074 /* KeyPadProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadProtocols.swift; sourceTree = "<group>"; };
 		D8AD80A821C62BAF00C91074 /* GameInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInputController.swift; sourceTree = "<group>"; };
+		D8AD80AB21C6AFCA00C91074 /* HIDDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDevice.swift; sourceTree = "<group>"; };
+		D8AD80AD21C6AFD400C91074 /* HIDDeviceMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceMonitor.swift; sourceTree = "<group>"; };
 		D8C734C7218959D100DE637C /* StNesEmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StNesEmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C734CA218959D100DE637C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C734CC218959D100DE637C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -224,11 +228,21 @@
 			path = KeyPad;
 			sourceTree = "<group>";
 		};
+		D8AD80AA21C6AFAF00C91074 /* HIDDeviceLib */ = {
+			isa = PBXGroup;
+			children = (
+				D8AD80AB21C6AFCA00C91074 /* HIDDevice.swift */,
+				D8AD80AD21C6AFD400C91074 /* HIDDeviceMonitor.swift */,
+			);
+			path = HIDDeviceLib;
+			sourceTree = "<group>";
+		};
 		D8C734BE218959D100DE637C = {
 			isa = PBXGroup;
 			children = (
-				D80DE59E21AEEF4400200DF2 /* Capture */,
 				D8C7350B2189F6D700DE637C /* README.md */,
+				D80DE59E21AEEF4400200DF2 /* Capture */,
+				D8AD80AA21C6AFAF00C91074 /* HIDDeviceLib */,
 				D8C734C9218959D100DE637C /* StNesEmu */,
 				D8C734DC218959D600DE637C /* StNesEmuTests */,
 				D8C734E7218959D600DE637C /* StNesEmuUITests */,
@@ -417,6 +431,11 @@
 				TargetAttributes = {
 					D8C734C6218959D100DE637C = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					D8C734D8218959D600DE637C = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -502,6 +521,7 @@
 				D80D8C1721AA95A200898C57 /* CanvasRenderer.swift in Sources */,
 				D87CFC18218D332600863EBA /* CPU_BUS.swift in Sources */,
 				D8C735052189732F00DE637C /* IO.swift in Sources */,
+				D8AD80AC21C6AFCA00C91074 /* HIDDevice.swift in Sources */,
 				D8C734CB218959D100DE637C /* AppDelegate.swift in Sources */,
 				D8F2E31321A2D96B00BCC23A /* CPU+Debugger.swift in Sources */,
 				D804697C218D6DEC00D193D7 /* Interrupts.swift in Sources */,
@@ -518,6 +538,7 @@
 				D87FC252219538FB005C9C20 /* OpCode.swift in Sources */,
 				D8C7350A2189EC9800DE637C /* OpenDialog.swift in Sources */,
 				D87FC25421953F3D005C9C20 /* CPU+AddressingMode.swift in Sources */,
+				D8AD80AE21C6AFD400C91074 /* HIDDeviceMonitor.swift in Sources */,
 				D8764A5521A7A5A700E918EA /* DMA.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

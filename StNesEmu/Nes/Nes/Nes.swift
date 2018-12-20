@@ -79,7 +79,7 @@ class Nes: NSObject {
         //  KeyPad
         //
         let keyPad = KeyPad()
-        self.gameInputController.setKeyPad(keyPad: keyPad)
+        self.gameInputController.setKeyPad(keyPad)
         
         //
         //  CPU BUS
